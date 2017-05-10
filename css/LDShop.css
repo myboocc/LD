@@ -1,0 +1,304 @@
+body {
+	font-family: "微软雅黑";
+	background-color: #F3F3F3;
+}
+
+.has-max {
+	max-width: 640px;
+} /*滚动图*/
+.swiper-container1 img {
+	width: 100%;
+} /*九宫格分类*/
+.weui_grid {
+	width: 25%;
+	padding: 10px;
+}
+
+.classify-icon {
+	width: 25px;
+}
+
+.classify-name {
+	margin-top: 10px !important;
+}
+
+.weui_grids a:nth-child(1) {
+	color: #07ADE1;
+}
+
+.weui_grids a:nth-child(2) {
+	color: #EB5449;
+}
+
+.weui_grids a:nth-child(3) {
+	color: #EB5449;
+}
+
+.weui_grids a:nth-child(4) {
+	color: #2FB695;
+}
+
+.weui_grids a:nth-child(5) {
+	color: #F3962C;
+}
+
+.weui_grids a:nth-child(6) {
+	color: #EB4F38;
+}
+
+.weui_grids a:nth-child(7) {
+	color: #30B695;
+}
+
+.weui_grids a:nth-child(8) {
+	color: #EB5449;
+}
+
+.weui_grids a:nth-child(9) {
+	color: #FE9485;
+}
+
+.weui_grids a:nth-child(10) {
+	color: #10A5E9;
+}
+
+.weui_grids a:nth-child(11) {
+	color: #F0AACB;
+}
+
+.weui_grids a:nth-child(12) {
+	color: #00BB9C;
+}
+
+.weui_grids a:nth-child(13) {
+	color: #F4C600;
+}
+
+.weui_grids a:nth-child(14) {
+	color: #EB4F38;
+}
+
+.weui_grids a:nth-child(15) {
+	color: #FC6495;
+}
+
+.weui_grids a:nth-child(16) {
+	color: #9AE2FA;
+}
+
+.weui_grids a:nth-child(17) {
+	color: #4BBCB7;
+}
+
+.weui_grids a:nth-child(18) {
+	color: #10A5E9;
+}
+
+.swiper-pagination-bullet {
+	width: 6px;
+	height: 6px;
+}
+
+.swiper-container2 {
+	background-color: #fff;
+}
+
+.swiper-container2 .swiper-pagination-bullet-active {
+	background: #F6292E;
+}
+
+.swiper-container2 .swiper-pagination2 {
+	bottom: initial;
+	margin-top: -16px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.weui_grids:before {
+	border: 0;
+}
+
+.weui_grid:before {
+	border: 0;
+} /*专属优惠滚动信息*/
+.swiper-container3 {
+	height: 20px;
+	line-height: 20px;
+}
+
+.scroll-information {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	font-size: 14px;
+	width: 90%;
+}
+
+.hide-active .weui_cell:not (.no_access ):active {
+	background-color: initial;
+}
+
+.scroll-image {
+	width: 30%;
+	padding-right: 8px;
+	margin-right: 8px;
+	border-right: 1px solid #dcd5d5;
+}
+
+.scroll-image img {
+	width: 100%;
+}
+
+.weui_cells_access .weui_cell_ft:after {
+	border-color: #888;
+}
+
+.weui_cell_ft {
+	display: block;
+} /*推荐秒杀栏*/
+.recommended-spike .weui_media_appmsg .weui_media_hd {
+	width: initial;
+	height: initial;
+	line-height: initial;
+}
+
+.recommended-spike {
+	margin-top: 10px;
+	background-color: #fff;
+}
+
+.recommended-name {
+	font-size: 16px !important;
+}
+
+.recommended-num1 {
+	color: #EEA1AD;
+	font-size: 12px;
+}
+
+.recommended-num1 span {
+	background-color: #F93B5E;
+	color: #fff;
+	border-radius: 50%;
+	padding: 4px;
+	margin-left: 2px;
+}
+
+.recommended-image1 {
+	margin-right: 0 !important;
+	width: 45% !important;
+}
+
+.recommended-image2 {
+	margin-right: 0 !important;
+	width: 25% !important;
+}
+
+.recommended-num2 {
+	font-size: 12px;
+}
+
+.recommended-right {
+	padding: 2px 15px;
+}
+
+.recommended-top {
+	margin-top: 5px;
+} /*秒杀大图*/
+.recommended-image3 {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.recommended-image3 img {
+	width: 100%;
+} 
+
+/*首页产品列表*/
+.special_recommand_wrap .product{
+	position: relative;
+	width: 100%;
+    margin-top: 15px;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+.special_recommand_wrap .product .pic{
+	position: relative;
+    overflow: hidden;
+}
+
+.product-list-border:nth-child(1) {
+	margin-top: 0;
+}
+
+.product-list-border:nth-child(2) {
+	margin-top: 0;
+}
+
+.product-list-border {
+	background-color: #fff;
+	/*width: calc(( 100% - 5px * 1)/2) !important;*/
+	/*padding: 5px;*/
+	margin-top: 10px;
+}
+
+.product-list-border img {
+	width: 100%;
+	min-height: 150px;
+	max-height: 180px;
+}
+
+.product-name {
+	color: #000;
+	font-size: 14px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+}
+
+.product-price {
+	color: #e60d1e;
+	font-size: 14px;
+	margin: 5px auto;
+} /*底部菜单栏*/
+.footer-menu {
+	position: fixed;
+	max-width: 640px;
+}
+
+.weui_tabbar_item {
+	color: #888;
+}
+
+.weui_bar_item_on {
+	color: #EB4F38;
+}
+
+.weui_tabbar_item.weui_bar_item_on .weui_tabbar_label {
+	color: #EB4F38;
+}
+
+.weui_tabbar:before {
+	border-top: 1px solid #d5d5d6;
+}
+
+.footer-menu-icon {
+	margin-bottom: 5px;
+	margin-top: 10px !important;
+}
+
+.icon {
+  /* 通过设置 font-size 来改变图标大小 */
+  width: 1em; height: 1em;
+  /* 图标和文字相邻时，垂直对齐 */
+  vertical-align: -0.15em;
+  /* 通过设置 color 来改变 SVG 的颜色/fill */
+  fill: currentColor;
+  /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
+     normalize.css 中也包含这行 */
+  overflow: hidden;
+}

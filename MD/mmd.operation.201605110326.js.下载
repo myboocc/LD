@@ -1,0 +1,4 @@
+define('mmd.operation',function(require,exports,module){var $=require('zepto');function manageOperationTime(){var oTimes=$(".operation_time");oTimes.each(function(){var $this=$(this);var startTime=$this.attr("data-time-start");var endTime=$this.attr("data-time-end");var timeRex=/^\d{4}\/\d{2}\/\d{2} \d{2}\:\d{2}\:\d{2}$/;if(timeRex.test(startTime)&&timeRex.test(endTime)){var now=new Date();var t1=new Date(startTime);var t2=new Date(endTime);if(t1<now&&t2>now){$this.css("display","block");}else{$this.remove();}}else{$this.remove();}});}
+function isInterval(){if(typeof(intervalTag)=="undefined"){return;}
+if(intervalTag){if($('.interval_tag1').length>0){$('.interval_tag1').show();$('.interval_tag0').remove();}else{$('.interval_tag0').show();}}else{$('.interval_tag1').remove();}}
+exports.init=function(){manageOperationTime();isInterval();}});
