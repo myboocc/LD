@@ -217,7 +217,23 @@ body {
 } 
 
 /*首页产品列表*/
+i,
 em {
+	font-style: normal
+}
+.special_recommand_wrap .product .pic .product_type:after,
+.special_recommand_wrap .product .info .message:after,
+.special_recommand_wrap .product .cover_info:after,
+.special_recommand_wrap .product .evaluation_wrap:after,
+.special_recommand_wrap .product .evaluation_wrap .evaluation_pic:after,
+.special_recommand_wrap .product .evaluation_wrap .evaluation_come_from:after,
+.special_recommand_wrap .product .comment_wrap .evaluation_title:after,
+.normal_recommand_wrap .title:after,
+.normal_product_list:after{
+	clear: both;
+    content: '\20';
+    display: block;
+}
 .special_recommand_wrap .product{
 	position: relative;
 	width: 100%;
