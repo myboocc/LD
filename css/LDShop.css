@@ -217,6 +217,7 @@ body {
 } 
 
 /*首页产品列表*/
+em {
 .special_recommand_wrap .product{
 	position: relative;
 	width: 100%;
