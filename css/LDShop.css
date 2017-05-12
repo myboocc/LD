@@ -255,7 +255,7 @@ em {
 }
 
 .product-list-border {
-	background-color: #fff;
+	/*background-color: #fff;*/
 	/*width: calc(( 100% - 5px * 1)/2) !important;*/
 	/*padding: 5px;*/
 	margin-top: 10px;
