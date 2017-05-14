@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>购物车</title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<meta http-equiv="x-dns-prefetch-control" content="on">
+	<link rel="dns-prefetch" href="//g.mdcdn.cn/">
+	<link rel="dns-prefetch" href="//pic.mdcdn.cn">
+	<link rel="stylesheet" type="text/css" href="resources/css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/cart.css"/>
+
+	<script>
+		window.gPAGECONFIG = {
+			headstyle: 'default',
+			headtitle: '购物车',
+			right_type: "hide"
+		};
+		window.VIEWPORT_FLAG = true;
+	</script>
+	<!--<script charset="utf-8" async="" src="//g.mdcdn.cn/??/js/version/201702/cart.commonv2.201702160820.js,/js/version/201608/cookie.201608240122.js,/js/version/201511/formatJson.201511251652.js,/js/version/201510/mmd.address.201510231412.js,/js/version/201704/mmd.cart.index_v2.201704240705.js,/js/version/201604/module.error.201604051510.js,/js/version/201510/zepto.mpopup.v2.201510281136.js"></script>-->
+	<script async="" src="resources/js/common_car.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="https://hm.baidu.com/h.js?4b9a2b6647c9bdd3d01c28ea3f46049b" charset="utf-8"></script>-->
+	<script charset="utf-8" async="" src="//g.mdcdn.cn/js/version/201511/zepto.201511251648.js"></script>
+	<script async="" src="resources/js/head_webshare.js" type="text/javascript" charset="utf-8"></script>
+</head>
+	<body>
+	<!-- S header -->
+	<script>
+		var _hmt = _hmt || [];
+		if(!window.TRS) {
+			TRS = {};
+		}
+		(function() {
+			// 添加禁止功能 2015-04-17
+			if(!window.VIEWPORT_FLAG) {
+
+				var standardDpi, dpi, w, scale, text;
+				w = window.screen.width;
+				if(w > 0) {
+					if(w < 320) {
+						standardDpi = 120;
+					} else if(w < 480) {
+						standardDpi = 160;
+					} else if(w < 640) {
+						standardDpi = 240;
+					} else if(w < 960) {
+						standardDpi = 320;
+					} else if(w < 1280) {
+						standardDpi = 480;
+					} else {
+						standardDpi = 640;
+					}
+				}
+				dpi = 640 * standardDpi / w;
+				dpi = Math.floor(dpi);
+				scale = 640 / w;
+				var userAgt = navigator.userAgent;
+				if(window.navigator.appVersion.match(/iphone/gi)) {
+					//                text = '<meta name="viewport" content="width=device-width, initial-scale='+(w/640)+', maximum-scale=1, minimum-scale=0.5, user-scalable=no" />';
+					text = '<meta name="viewport" content="width=device-width, initial-scale=' + (w / 640) + ', maximum-scale=' + (w / 640) + ', minimum-scale=' + (w / 640) + ', user-scalable=no" />';
+					if(navigator.userAgent.indexOf("iPhone OS 4_") > -1 || navigator.userAgent.indexOf("iPhone OS 5_") > -1 || navigator.userAgent.indexOf("iPhone OS 6_") > -1) {
+						text = '<meta name="viewport" content="width=640, initial-scale=1, maximum-scale=0.5, minimum-scale=0.5, user-scalable=yes" />';
+					}
+				} else if(userAgt.match(/Firefox/gi) || (userAgt.match(/Chrome/gi) && !userAgt.match(/MicroMessenger/gi))) {
+					text = '<meta name="viewport" content="width=640,initial-scale=' + (w / 640) + ', maximum-scale=' + (w / 640) + ', minimum-scale=' + (w / 640) + ', user-scalable=no"/>';
+				} else {
+					text = '<meta name="viewport" content="width=640,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,target-densitydpi=' + dpi + ', user-scalable=no"/>';
+				}
+				document.write(text);
+
+				if("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+					var msViewportStyle = document.createElement("style");
+					msViewportStyle.appendChild(
+						document.createTextNode("@-ms-viewport{width:auto!important}")
+					);
+					document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+				}
+
+			}
+		})();
+	</script>
+	<header id="headWrap">
+		<div class="md_hd_wrap" id="headContent">
+			<div class="col_left ">
+				<a href="javascript:void(0);"><i id="backChildBtn" class="hd_back" attr-tag="backBtn"></i></a>
+			</div>
+			<div class="col_middle">
+				<h1 id="title">购物车</h1></div>
+			<div class="col_right hide">
+				<a href="https://w.midea.com/search/search_index?mtag=30023.2.2"><i class="hd_search"></i></a>
+			</div>
+		</div>
+	</header>
+	<ul class="smart_box" id="smartbox">
+	</ul>
+
+	<script>
+		// app 特殊样式
+		if(location.href.indexOf('appview') != -1 || location.href.indexOf('midea_home') != -1) {
+			document.body.className = document.body.className + ' app_view';
+		}
+
+		function getCookieV2(name) {
+			var reg = new RegExp("(^| )" + name + "(?:=([^;]*))?(;|$)"),
+				val = document.cookie.match(reg);
+			return val ? (val[2] ? decodeURIComponent(val[2]) : "") : null;
+		}
+
+		var env = getCookieV2('env') || {};
+		try {
+			env = JSON.parse(env);
+		} catch(e) {
+			env = {};
+		}
+
+		if(env.channel == 5) {
+			document.body.className = document.body.className + ' app_view';
+		}
+
+		if(!window.TRS) {
+			TRS = {};
+		}
+		(function() {
+			var sIndexUrl = 'https://w.midea.com',
+				myUrl = 'https://w.midea.com/my/index?regsrc=5.5002.5002004',
+				sSearchUrl = 'https://w.midea.com/search/search_index?mtag=30023.2.2',
+				sBackBtn = '<i id="backChildBtn" class="hd_back" attr-tag="backBtn"></i>',
+				headConfig = {
+					index: '<div class="col_left"><a id="Js_username" href="' + myUrl + '">' + '<i class="hd_my"></i>' + ' </a> </div> <div class="col_middle"><i class="hd_logo"></i></div>\
+        <div class="col_right"><a href="' + sSearchUrl + '"><i class="hd_search"></i></a></div>',
+					index_v3: '<div class="col_left"><a id="Js_username" href="' + myUrl + '">' + '<i class="icon_index hd_my"></i><div class="portrait_wrap"><i class="icon_index icon_header_default_portrait"></i><img class="user_portrait" width="30" height="30" src="//img.mdcdn.cn/pc/img/my/user/user_default_portrait_120x120.png"/></div></a> </div>\
+                    <div class="col_middle"><i class="icon_index icon_header_midea"></i></div>\
+        <div class="col_right"><a href="' + sSearchUrl + '"><i class="icon_index hd_search"></i></a></div>',
+					detail: '<div class="col_left">' + sBackBtn + '</div>\
+        <div class="col_middle"><h1>商品详情</h1></div>\
+        <div class="col_right"><i class="hd_share" attr-tag="shareBtn"></i></div>',
+					search3: '<div class="col_left">' + sBackBtn + '</div>\
+        <div class="col_middle"><form method="get" action="https://w.midea.com/search" id="searchForm"><input type="search" maxlength="40" id="kw" name="kw" class="input_search"><i class="hd_cancel" style="display:none;"></i></form></div>\
+        <div class="col_right"><i class="hd_search" attr-tag="searchBtn"></i></div>',
+					default: '<div class="col_left {#left_type#}"><a href="{#left_link#}">{#left_content#}</a></div>\
+           <div class="col_middle"><h1 id="title">{#title#}</h1></div>\
+           <div class="col_right {#right_type#}"><a href="{#right_link#}">{#right_content#}</a></div>',
+					option: '<div class="col_left">' + sBackBtn + '</div>\
+           <div class="col_middle"><h1 id="title">{#title#}</h1></div>\
+           <div class="col_right editing" id="JS_header_right_option"><span class="edit" style="display: none;">编辑</span><span class="finish">完成</span></div>',
+					simple: '<div class="col_left">' + sBackBtn + '</div>\
+           <div class="col_middle"><h1 id="title">{#title#}</h1></div>\
+           <div class="col_right"></div>',
+					doubletab: '<div class="col_left {#left_type#}">' + sBackBtn + '</div>\
+           <div class="col_middle"><ul class="double_tab" id="headDoubleTab">{#double_li}</ul></div>\
+           <div class="col_right"></div>',
+					search2: '<div class="col_left {#left_type#}">' + sBackBtn + '</div>\
+                                    <div class="col_search"><form action="https://w.midea.com/search" id="searchForm"><i class="icon_list icon_search"></i>\
+                                    <input type="search" maxlength="40" id="kw" name="kw" class="input_search" placeholder="" data-default_search_link="">\
+                                    <div class="kw_delete"  id="kwDelete">\
+                                    <i class="icon_list icon_delete"></i></div></form>  </div>\
+                                    <div class="col_right"><button type="button" class="header_search_btn">搜索</button></div>',
+
+					search: '<div class="col_left {#left_type#}">' + sBackBtn + '</div>\
+                              <div class="col_search">\
+                                    <form id="searchForm">\
+                                        <i class="icon_list icon_search"></i>\
+                                        <input type="search" maxlength="40" id="keyword" name="keyword" class="input_search" placeholder="" data-default_search_link="" autocomplete="off"/>\
+                                        <div class="kw_delete"  id="kwDelete"><i class="icon_list icon_delete"></i></div>\
+                                    </form>\
+                              </div>\
+                              <div class="col_right {#right_type#}">{#right_content#}</div>',
+
+					search_for_coupon_sku: '<div class="col_left {#left_type#}">' + sBackBtn + '</div>\
+           <div class="col_search"><form id="couponSkuSearchForm"><i class="icon_list icon_search"></i>\
+                <input type="search" maxlength="40" id="couponSkuSearchKey" name="couponSkuSearchKey" class="input_search" placeholder="搜索优惠券适用商品" data-default_search_link="">\
+                <div class="kw_delete"  id="couponSkuSearchDelete">\
+                <i class="icon_list icon_delete"></i></div></form></div>',
+
+					none: '' //无头部
+				},
+				dHeadWrap = document.getElementById('headWrap');
+			if(!window.gPAGECONFIG) {
+				gPAGECONFIG = {
+					headstyle: 'default',
+					headtitle: document.title,
+					footstyle: 'couple'
+				};
+			}
+			//以下是头部配置例子
+			if(1 == 2) {
+				gPAGECONFIG = {
+					headstyle: "default", //doubletab,左返回，右边双tab；search，左搜索框，右搜索/取消，不填默认default; 04-29 新增 none (不使用公共头部)
+					headtitle: document.title,
+					left_type: "show or hide", //默认show
+					left_content: "返回",
+					left_link: "https://w.midea.com/my/index",
+					right_type: "show or hide", //默认show
+					right_content: "地图", //这里插入文字。如果不填则默认是搜索图标
+					right_link: "https://www.midea.com/cn/h5", //如果右边是链接
+					tabdata: [ //如果是双tab则要把文字与链接放进去
+						{
+							link: "javascript:void(0);",
+							name: "附近网点"
+						}, {
+							link: "javascript:void(0);",
+							name: "旗舰店"
+						}
+					],
+					cur: 1 //如果是双tab，当前tab是第几个，从1开始
+				}
+			}
+			//以上是头部配置例子
+
+			if(!(gPAGECONFIG.left_type && gPAGECONFIG.left_type == "hide")) {
+				gPAGECONFIG.left_type = "";
+			}
+			if(!(gPAGECONFIG.right_type && gPAGECONFIG.right_type == "hide")) {
+				gPAGECONFIG.right_type = "";
+			}
+			if(!gPAGECONFIG.left_content) {
+				gPAGECONFIG.left_content = sBackBtn;
+			}
+			//右边链接默认是
+			if(!gPAGECONFIG.left_link) {
+				gPAGECONFIG.left_link = "javascript:void(0);";
+			}
+
+			if(!gPAGECONFIG.right_content) {
+				gPAGECONFIG.right_content = "<i class='hd_search'></i>";
+			}
+			//右边链接默认是
+			if(!gPAGECONFIG.right_link) {
+				gPAGECONFIG.right_link = sSearchUrl;
+			}
+			//取出头部原型
+			var headContentHtml = headConfig[gPAGECONFIG.headstyle || 'default'];
+			if(gPAGECONFIG.headstyle == "default" || gPAGECONFIG.headstyle == "search") {
+				headContentHtml = headContentHtml.replace('{#left_content#}', gPAGECONFIG.left_content).replace('{#left_link#}', gPAGECONFIG.left_link).replace('{#left_type#}', gPAGECONFIG.left_type);
+				headContentHtml = headContentHtml.replace('{#right_type#}', gPAGECONFIG.right_type);
+				headContentHtml = headContentHtml.replace('{#right_content#}', gPAGECONFIG.right_content).replace('{#right_link#}', gPAGECONFIG.right_link);
+			} else if(gPAGECONFIG.headstyle == "doubletab") { //双tab
+				//当前tab
+				if(!gPAGECONFIG.cur) {
+					gPAGECONFIG.cur = 1;
+				}
+				var doubletabHtml = "";
+				if(gPAGECONFIG.tabdata && gPAGECONFIG.tabdata.length > 0) {
+					for(var mi = 0; mi < gPAGECONFIG.tabdata.length; mi++) {
+						if(!gPAGECONFIG.tabdata[mi].link) {
+							gPAGECONFIG.tabdata[mi].link = "javascript:void(0);";
+						}
+						if(!gPAGECONFIG.tabdata[mi].name) {
+							gPAGECONFIG.tabdata[mi].name = "";
+						}
+						var curClass = "";
+						//设置当前态
+						if(gPAGECONFIG.cur == mi + 1) {
+							curClass = "cur";
+						} else {
+							curClass = "";
+						}
+						doubletabHtml = doubletabHtml + "<li class='" + curClass + "'><a href='" + gPAGECONFIG.tabdata[mi].link + "'><span>" + gPAGECONFIG.tabdata[mi].name + "</span></a></li>";
+					}
+				}
+				headContentHtml = headContentHtml.replace('{#double_li}', doubletabHtml);
+			} else if(gPAGECONFIG.headstyle == "none") { //不使用公共头部
+				document.getElementById('headWrap').style.display = "none";
+			}
+			if(gPAGECONFIG.headtitle) {
+				headContentHtml = headContentHtml.replace('{#title#}', gPAGECONFIG.headtitle);
+			}
+			//左侧
+			if(gPAGECONFIG.headstyle == "default" || gPAGECONFIG.headstyle == "doubletab") {
+				headContentHtml = headContentHtml.replace('{#left_type#}', gPAGECONFIG.left_type);
+			}
+			document.getElementById('headContent').innerHTML = headContentHtml;
+
+			var backBtnEle = document.getElementById('backChildBtn');
+			if(backBtnEle) {
+				var backBtn = document.getElementById('backChildBtn').parentNode;
+				if(document.referrer === '') {
+					backBtn.className += " hide";
+				}
+				backBtn.onclick = function() {
+					window.history.go(-1);
+				};
+			}
+			document.addEventListener('DOMContentLoaded', function() {
+				if(window.navigator.appVersion.match(/iphone/gi)) {
+					var arrInput = document.querySelectorAll('input[type=text]');
+					for(var i = 0; i < arrInput.length; i++) {
+						arrInput[i].addEventListener('focus', function() {
+							dHeadWrap.className += ' md_hd_fix_fixed';
+						});
+
+						arrInput[i].addEventListener('blur', function() {
+							dHeadWrap.className = dHeadWrap.className.replace(/md_hd_fix_fixed/g, '');
+						});
+					}
+				}
+			}, false);
+			window._md_share_config = {
+				title: '美的商城，美的集团唯一官方商城！',
+				desc: '新品首发、官方直供、会员专享、限时抢购，尽在美的官方商城，还不快来！',
+				img_url: 'http://img.mdcdn.cn/h5/img/mall/h5_share.jpg',
+				url: location.href,
+				success: function() {
+					_hmt.push(['_trackEvent', 'mmd', 'ajax', location.href + '[分享成功]', 1]);
+				}
+			}
+		})();
+	</script>
+	<!-- 公共模块入口 -->
+	<script>
+		(function() {
+			if(!window.moduleReady) window.moduleReady = [];
+			moduleReady.push(function() {
+				function getCombUrl(list) {
+					var a = [];
+					for(var i = 0; i < list.length; i++) {
+						if(!window._moduleConfig.alias[c[i][0]] && list[i]) {
+							a.push(list[i]);
+						}
+					}
+					return a.length > 1 ? (d + "/??" + a.join(",")) : (d + a[0]);
+				}
+				var g = [
+						[]
+					],
+					c = [],
+					d = '//g.mdcdn.cn',
+					mdebug = location.href.indexOf("mdebug=1") != -1,
+					alias = [];
+				/**
+				 * 模块分组
+				 */
+				g["1"] = ["\/js\/version\/201506\/cookie.201506301749.js", "\/js\/version\/201607\/mmd.head.v2.201607010751.js", "\/js\/version\/201410\/webshare.201410081804.js", "\/js\/version\/201511\/zepto.201511251648.js"];
+				c = [
+					['cookie', 1, 0],
+					['mmd.head.v2', 1, 1],
+					['webshare', 1, 2],
+					['zepto', 1, 3]
+				];
+
+				for(var i = 0; i < c.length; i++) {
+					var key = c[i][0];
+					if(!window._moduleConfig.alias[key]) {
+						var surl = d + g[c[i][1]][c[i][2]];
+						var furl = getCombUrl(g[c[i][1]]); //合并包地址
+						alias[key] = mdebug ? surl : furl;
+					}
+				}
+				for(var key in alias) {
+					window._moduleConfig.alias[key] = alias[key];
+				}
+				modulejs('mmd.head.v2', function(m) {
+					m.init();
+				});
+			});
+		})();
+	</script>
+
+	<!-- E header -->
+	<!-- cart_item_hd 列表栏  addr_edit_box 地址选择栏 cart_all_edit 全部编辑栏 -->
+	<!-- noselect_icon 未选 selected_icon 选中  midea_icon 官网 fx_icon 店铺 -->
+	<div class="cart_wrap" id="list">
+		<div class="left_right_box addr_edit_box">
+			<div class="cart_left" id="area" data-mmd-address="1">
+				<i class="addr_icon"></i><span class="cart_left_name addr" id="addrText">攀枝花市西区</span>
+			</div>
+			<!-- edit-state 1 编辑 2 完成-->
+			<div class="cart_right" id="editAll" edit-state="1">编辑全部</div>
+		</div>
+		<div class="cart_main_content" id="renderCartContent">
+			<!-- 购物车列表不为空 显示购物车列表信息 -->
+			<!-- S 店铺列表(不包含失效商品) -->
+			<!-- 购物车列表不为空 显示购物车列表信息 -->
+			<div class="cart_list_box js_cart_shop_100511">
+
+				<div class="left_right_box cart_item_hd">
+					<div class="cart_left">
+						<div class="js_shop_select_box" data-id="100511"></div>
+						<i class="noselect_icon js_shop_select" data-select="0"></i><i class="midea_icon"></i>
+
+						<span class="cart_left_name">美的官网商城</span>
+					</div>
+					<div class="cart_right edit_single" edit-state="1">编辑</div>
+				</div>
+				<ul class="cart_items">
+					<!-- 活动组 -->
+
+					<li class="cart_item_box  js_item_detail_154639">
+						<div class="cart_item">
+
+							<div class="cart_product_operate ">
+								<div class="operate_box">
+									<div class="js_item_delete btn blue_btn" data-id="154639" data-itemid="1000000000100511154639" data-item-type="0" data-type="collect">
+										<span>移入<br>收藏夹</span></div>
+									<div class="js_item_delete btn yellow_btn" data-id="154639" data-itemid="1000000000100511154639" data-item-type="0" data-act-id="0" data-shop-id="100511" data-type="delete">
+										<span>删除</span></div>
+								</div>
+							</div>
+
+							<div class="cart_item_content">
+								<div class="js_item_select_box">
+
+								</div>
+								<div class="check_wrap">
+									<i class="noselect_icon js_item_select" data-select="0" data-id="154639" data-itemid="1000000000100511154639"></i>
+								</div>
+
+								<div class="item_core">
+									<a class="cart_product_cell1" href="//w.midea.com/detail/index?itemid=1000000000100511154639"><img data-img="//pic.mdcdn.cn/ImageStore/144025/pic/875252414b24e051A6354/875252414b24e051A6354_280*280.jpg?x-oss-process=image/format,webp/quality,Q_90&amp;" src="//pic.mdcdn.cn/ImageStore/144025/pic/875252414b24e051A6354/875252414b24e051A6354_280*280.jpg?x-oss-process=image/format,webp/quality,Q_90&amp;" alt=""></a>
+
+									<div class="cart_product_cell2">
+										<div class="cart_product_name">
+											<a href="//w.midea.com/detail/index?itemid=1000000000100511154639">
+												<p>
+													【无罐双出水】净水机M75 五级RO反渗透 1:1节水 3年长效滤芯 MRC1795A-75G</p>
+											</a>
+										</div>
+										<div class="cart_product_prop">
+											香槟金 
+										</div>
+										<div class="num_wrap num_wrap_minus_disabled" id="divEditNum_154639">
+											<span id="minus_154639" class="minus"></span>
+											<!--<span class="num">1</span>-->
+											<input id="num_154639" class="num" type="tel" value="1" pattern="[0-9]">
+											<span id="plus_154639" class="plus"></span>
+											<i class="cart_warn"></i>
+										</div>
+
+									</div>
+									<div class="cart_product_cell3">
+										<div class="cart_produt_price"><i class="symbol">¥</i>2198.00</div>
+										<div class="tag_box">
+											<div class="sku_tag sku_tag_important">限时特惠</div>
+										</div>
+										<!-- 分期免息 -->
+										<div class="cart_product_num">x1</div>
+										<!--<div class="cart_product_stock">该地区无货</div>-->
+									</div>
+									<div class="cart_product_stock" data-tip=""></div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="cart_item_box  js_item_detail_148696">
+						<div class="cart_item">
+
+							<div class="cart_product_operate ">
+								<div class="operate_box">
+									<div class="js_item_delete btn blue_btn" data-id="148696" data-itemid="1000000000100511148696" data-item-type="0" data-type="collect">
+										<span>移入<br>收藏夹</span>
+									</div>
+									<div class="js_item_delete btn yellow_btn" data-id="148696" data-itemid="1000000000100511148696" data-item-type="0" data-act-id="0" data-shop-id="100511" data-type="delete">
+										<span>删除</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="cart_item_content">
+								<div class="js_item_select_box">
+
+								</div>
+								<div class="check_wrap">
+									<i class="noselect_icon js_item_select" data-select="0" data-id="148696" data-itemid="1000000000100511148696"></i>
+								</div>
+
+								<div class="item_core">
+									<a class="cart_product_cell1" href="//w.midea.com/detail/index?itemid=1000000000100511148696"><img data-img="//pic.mdcdn.cn/ImageStore/142418/pic/53797b92731b7f22A4477/53797b92731b7f22A4477_280*280.jpg?x-oss-process=image/format,webp/quality,Q_90&amp;" src="//pic.mdcdn.cn/ImageStore/142418/pic/53797b92731b7f22A4477/53797b92731b7f22A4477_280*280.jpg?x-oss-process=image/format,webp/quality,Q_90&amp;" alt=""></a>
+
+									<div class="cart_product_cell2">
+										<div class="cart_product_name">
+											<a href="//w.midea.com/detail/index?itemid=1000000000100511148696">
+												<p>
+													洗衣机 9.0kg变频滚筒 除菌洗 大容量 智能操控 MG90V130WDX</p>
+											</a>
+										</div>
+										<div class="cart_product_prop">
+											白色/9KG 
+										</div>
+										<div class="num_wrap num_wrap_minus_disabled" id="divEditNum_148696">
+											<span id="minus_148696" class="minus"></span>
+											<!--<span class="num">1</span>-->
+											<input id="num_148696" class="num" type="tel" value="1" pattern="[0-9]">
+											<span id="plus_148696" class="plus"></span>
+											<i class="cart_warn"></i>
+										</div>
+
+									</div>
+									<div class="cart_product_cell3">
+										<div class="cart_produt_price"><i class="symbol">¥</i>1998.00</div>
+										<div class="tag_box">
+											<div class="sku_tag sku_tag_important">520美粉节</div>
+										</div>
+										<!-- 分期免息 -->
+										<div class="cart_product_num">x1</div>
+										<!--<div class="cart_product_stock">该地区无货</div>-->
+									</div>
+									<div class="cart_product_stock" data-tip=""></div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+
+			<!-- E 店铺列表 -->
+
+			<!-- S 失效商品 -->
+			<!-- E 失效商品 -->
+
+			<!-- fix_bar 吸底按钮  cart_all_edit （吸底按钮）全部编辑状态  has_no_stock 包含无货商品 onclick="location.reload();" -->
+
+			<div class="left_right_box fix_bar js_fix_bar">
+
+				<div class="alarm_tip hide">当前商品中包含无货商品，请重新勾选再去结算</div>
+				<div class="cart_left" id="selectAllBox">
+					<!-- noselect_icon 未选 selected_icon 选中  midea_icon 官网 fx_icon 店铺  data-select 0 未选择 1 选择 -->
+					<i class="noselect_icon" id="selectAll" data-select="0"></i><span class="cart_left_name fz15">全选</span>
+				</div>
+				<div class="cart_right">
+					<div class="settlement_state">
+						<div class="price_box"><span class="price_wrap">合计：<span class="cart_produt_price fz15" id="totalPriceTip"><i class="symbol">¥</i><span id="totalPrice">0.00</span> </span>
+							</span><span class="price_tip">不含运费</span></div>
+						<div class="btn gray_btn fz16" id="totalCheck">结算(0 )
+						</div>
+					</div>
+					<div class="edit_state">
+						<div class="btn blue_btn js_sum_delete" data-type="collect">移入收藏夹</div>
+						<div class="js_sum_delete btn yellow_btn" data-type="delete">删除</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<form action="/wxorder/buyer/checkout?flag=cart" id="toOrder" method="post">
+			<input type="hidden" name="skulist" id="skuList" value="[]">
+			<input type="hidden" name="involve_gift_act_list" id="actList" value="[]">
+			<input type="hidden" name="fsid_list" id="shopList" value="[{&quot;disid&quot;:100511,&quot;fsid&quot;:&quot;1000000000100511&quot;}]">
+			<input type="hidden" name="business_option" value="1">
+			<!-- fsid 涉及跨店铺分佣 -->
+			<input type="hidden" name="fsid" id="fsid" value="0">
+		</form>
+		<!-- product_state （默认）换购商品列表  active_state 活动列表-->
+		<div class="fix_wrap">
+			<!-- mask -->
+			<div class="mask"></div>
+			<div class="product_box js_product_box">
+				<!-- 查看换购商品 -->
+
+			</div>
+			<div class="active_box js_active_box">
+				<!-- 促销活动列表 -->
+			</div>
+		</div>
+	</div>
+	<!-- 加载中动画 -->
+	<div class="loader_wrap">
+		<div class="loader_inner">
+			<img src="https://pic.mdcdn.cn/h5/img/common/loading32.gif" width="25" height="25">
+		</div>
+	</div>
+	<script>
+		var mideaShop = 100511; //100511 todo
+		var strModifySkuIds = "148696,154639"; //非失效商品ids字符串1.对比数据是否正常 2.用于初始化编辑框
+		var strModifyActIds = ""; //非失效商品ids字符串1.对比数据是否正常 2.用于初始化编辑框
+		var vecCartActList = []; //活动信息
+		var frontItemList = {
+			"154639": {
+				"lDisSkuId": 154639,
+				"lDistributorId": 100511,
+				"oActiveInfo": {
+					"lIcSkuId": 144025,
+					"lDisSkuId": 154639,
+					"lDistributorId": 100511,
+					"lActiveId": 205047,
+					"lItemPropertyMask": 0,
+					"nItemStatus": 1,
+					"nActiveStatus": 3,
+					"lPreheatTime": 1494388800,
+					"lStartTime": 1494432000,
+					"lEndTime": 1494864000,
+					"nQuota": 0,
+					"lDiscount": 0,
+					"lDiscountFee": 0,
+					"lActiveFee": 219800,
+					"nActiveType": 1,
+					"strActiveTitle": "\u51c0\u996e11-14",
+					"strActiveTag": "\u9650\u65f6\u7279\u60e0",
+					"nCloseTime": 0,
+					"vecUserType": [1],
+					"nIsDisplayActiveFee": null,
+					"lActivePropertyMask": null,
+					"strCouponBatch": "",
+					"lEarnest": 0,
+					"lSoldStock": 0,
+					"lTotalStock": 0,
+					"lEarnestStartTime": 0,
+					"lEarnestEndTime": 0,
+					"lFinalMoneyStartTime": 0,
+					"lFinalMoneyEndTime": 0,
+					"nIsDisplayNormalBuy": 0,
+					"lFinalMoney": 219800,
+					"lPreLockStock": 0,
+					"lWmallStock": 0,
+					"lMobileDiscount": 0,
+					"lMobileDiscountFee": null,
+					"lMobileActiveFee": 219800
+				},
+				"nDisSkuNum": 1,
+				"nIsCheck": 0,
+				"fNIsChecked": 0,
+				"lSalePrice": "2198.00",
+				"lOriginalPrice": "2398.00",
+				"strDisSkuTile": "\u3010\u65e0\u7f50\u53cc\u51fa\u6c34\u3011\u51c0\u6c34\u673aM75 \u4e94\u7ea7RO\u53cd\u6e17\u900f  1:1\u8282\u6c34 3\u5e74\u957f\u6548\u6ee4\u82af MRC1795A-75G",
+				"nDisSkuState": 2,
+				"nQuota": 0,
+				"nCalStock": 407,
+				"vecGiftActs": [],
+				"vecPicInfos": [{
+					"lPicIndex": 1,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/144025\/pic\/875252414b24e051A6354"
+				}, {
+					"lPicIndex": 2,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/144025\/pic\/67c662e9b99effabA27639"
+				}, {
+					"lPicIndex": 3,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/144025\/pic\/5f7cdf73f2592729A21758"
+				}, {
+					"lPicIndex": 4,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/144025\/pic\/4014f42aef0aa7f7A1924"
+				}, {
+					"lPicIndex": 5,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/144025\/pic\/2fcf4ff7adeb51a4A18945"
+				}],
+				"strSpec": "{\"colorName\":\"\u9999\u69df\u91d1\"}",
+				"strFiid": "1000000000100511154639",
+				"nIsActGiftSku": 0,
+				"nActType": 0,
+				"lActId": 0,
+				"fIsSupportReminder": false,
+				"fIsGiftReminder": false,
+				"fProductStatusText": "",
+				"lSumSalePrice": "2198.00",
+				"nIsItemOverflowFlag": 0,
+				"nIsItemInvalidFlag": 0
+			},
+			"148696": {
+				"lDisSkuId": 148696,
+				"lDistributorId": 100511,
+				"oActiveInfo": {
+					"lIcSkuId": 142418,
+					"lDisSkuId": 148696,
+					"lDistributorId": 100511,
+					"lActiveId": 204026,
+					"lItemPropertyMask": 0,
+					"nItemStatus": 1,
+					"nActiveStatus": 3,
+					"lPreheatTime": 1494340200,
+					"lStartTime": 1494345600,
+					"lEndTime": 1494777300,
+					"nQuota": 5,
+					"lDiscount": 0,
+					"lDiscountFee": 0,
+					"lActiveFee": 199800,
+					"nActiveType": 1,
+					"strActiveTitle": "\u6d17\u8863\u673a\u7279\u60e0",
+					"strActiveTag": "520\u7f8e\u7c89\u8282",
+					"nCloseTime": 0,
+					"vecUserType": [1],
+					"nIsDisplayActiveFee": null,
+					"lActivePropertyMask": null,
+					"strCouponBatch": "",
+					"lEarnest": 0,
+					"lSoldStock": 0,
+					"lTotalStock": 0,
+					"lEarnestStartTime": 0,
+					"lEarnestEndTime": 0,
+					"lFinalMoneyStartTime": 0,
+					"lFinalMoneyEndTime": 0,
+					"nIsDisplayNormalBuy": 0,
+					"lFinalMoney": 199800,
+					"lPreLockStock": 0,
+					"lWmallStock": 0,
+					"lMobileDiscount": 0,
+					"lMobileDiscountFee": null,
+					"lMobileActiveFee": 199800
+				},
+				"nDisSkuNum": 1,
+				"nIsCheck": 0,
+				"fNIsChecked": 0,
+				"lSalePrice": "1998.00",
+				"lOriginalPrice": "2498.00",
+				"strDisSkuTile": "\u6d17\u8863\u673a 9.0kg\u53d8\u9891\u6eda\u7b52 \u9664\u83cc\u6d17 \u5927\u5bb9\u91cf \u667a\u80fd\u64cd\u63a7 MG90V130WDX",
+				"nDisSkuState": 2,
+				"nQuota": 5,
+				"nCalStock": 544,
+				"vecGiftActs": [],
+				"vecPicInfos": [{
+					"lPicIndex": 1,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/142418\/pic\/53797b92731b7f22A4477"
+				}, {
+					"lPicIndex": 2,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/142418\/pic\/a3632a48a36bdb27A4476"
+				}, {
+					"lPicIndex": 3,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/142418\/pic\/20e90c6a8059a35aA4581"
+				}, {
+					"lPicIndex": 4,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/142418\/pic\/c380b0b4a1c95201A4490"
+				}, {
+					"lPicIndex": 5,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/142418\/pic\/5dabfcfc38a9e38eA4356"
+				}, {
+					"lPicIndex": 6,
+					"strPicSizes": "120*120,280*280,310*310,430*430,530*530,",
+					"lPicType": 1,
+					"strLocalPicRelativePath": "\/data\/share\/ImageStore\/142418\/pic\/be5c789c71eb172bA4357"
+				}],
+				"strSpec": "{\"colorName\":\"\u767d\u8272\",\"specName\":\"9KG\"}",
+				"strFiid": "1000000000100511148696",
+				"nIsActGiftSku": 0,
+				"nActType": 0,
+				"lActId": 0,
+				"fIsSupportReminder": false,
+				"fIsGiftReminder": false,
+				"fProductStatusText": "",
+				"lSumSalePrice": "1998.00",
+				"nIsItemOverflowFlag": 0,
+				"nIsItemInvalidFlag": 0
+			}
+		}; //渲染列表数据
+		var totalCheck = 0;
+		var nIsSumOverflowFlag = 0;
+		var nIsAllInvalid = 0; //是否全为失效商品
+		var fsId = 1000000000100511; //用于传后台，获取fsid，传入到凑单list
+	</script>
+	<script type="text/html" id="activeListTpl">
+		<div class="hd active_hd">
+			促销活动
+		</div>
+		<div class="active_bd">
+			<ul class="active_list">
+				<%
+    var actList = data . data . actList,nowActId = data . data . actId,hasActFlag = 0;
+for (var i = 0; i < actList . length; i++){
+        var
+        item = actList[i],selectClass = '';
+    if (nowActId == item . lActivityId) {
+        selectClass = 'selected';
+        hasActFlag = 1;
+    }
+    %>
+				<li class="js_select_act_item <%= selectClass %>" data-act-id="<%= item . lActivityId %>">
+					<i></i>
+					<span><%= item . activeText %></span>
+				</li>
+				<%}%>
+				<%
+        if (hasActFlag == 0) {
+            %>
+				<li class="js_select_act_item selected" data-act-id="0"> <i></i> <span>不使用优惠</span>
+					<% } else { %>
+					<li class="js_select_act_item" data-act-id="0"><i></i> <span>不使用优惠</span>
+						<%
+        }
+        %>
+					</li>
+			</ul>
+		</div>
+		<div class="fix_wrap_btn js_confirm_act" data-old-act-id="<%= nowActId %>">
+			确定
+		</div>
+	</script>
+	<!-- 未选择状态 ：默认  选择状态 ： select  未满足状态 : unconform  已换完状态 : over
+                 多个捆绑换购商品 ：more_product
+                 -->
+	<!-- hasGiftGood 0 无换赠品 1 有换赠品 -->
+	<script type="text/html" id="giftListTpl">
+		<%
+    var giftTitle = "活动商品";
+     if(data.giftType == 5){
+         giftTitle = "满赠商品";
+         giftTip = "可选赠1款，已选"+data.checkedNum+"款";
+     }else if(data.giftType == 6){
+         giftTitle = "换购商品";
+         giftTip = "可换购1件，已选"+data.checkedNum+"件";
+     }
+
+    %>
+		<div class="hd product_hd" data-type="<%=data.giftType %>">
+			<%=giftTitle%><span class="title_tip"><%=giftTip %></span></div>
+		<% if(data.warnTip){ %>
+		<div class="warn_tip">
+			<%=data.warnTip %>
+
+		</div>
+		<% } %>
+		<div class="product_bd">
+			<ul class="exchange_product_list">
+				<%
+            var hasGiftGood = 0;
+            var actId = 0;
+            var distributorId = 0;
+            var giftList = (data.giftList)?data.giftList : [];
+            for (var i = 0; i < giftList . length; i++){
+                var item = giftList[i];
+        var liShowClass = '';
+
+                actId = item.lActId;
+                distributorId = item.lDistributorId;
+
+        if(item.nIsGray && item.nIsGray == 1){
+            liShowClass = ' over ';
+        }else{
+            if(data.canCheckStatus && item.nCheckState == 1){
+                if(item . isChecked){
+                    liShowClass +=' selected ';
+                    hasGiftGood = 1;
+                }
+                liShowClass += ' js_exchange_gift ';
+            }else{
+                liShowClass += ' unconform ';
+            }
+        }
+
+
+    %>
+				<li class="<%=liShowClass %>" data-check="<%= item . isChecked %>" data-sku-id="<%=item.strFiid %>" data-act-id="<%=item.lActId %>" data-step-id="<%=item.lStepId %>">
+					<div class="select_box">
+						<i class="noselect_icon"></i>
+					</div>
+					<div class="img_box">
+						<a class="cart_product_cell1" href="javascript:void(0);"><img src="<%=item.strPic %>" alt=""></a>
+					</div>
+					<div class="content_box">
+						<a href="//w.midea.com/detail/index?itemid=<%=item.strFiid %>">
+							<div class="product_name">
+								<%=item.strDisSkuTile %>
+							</div>
+						</a>
+						<div class="product_prop">
+							<%=item.strSpec %>
+						</div>
+
+					</div>
+					<div class="price_box">
+						<div class="new_price">&yen;<span class="price"> <%=item.lActGiftSkuPrice %></span></div>
+						<% if(item.lOriginalPrice){ %>
+						<div class="old_price">&yen;<span class="price"> <%=item.lOriginalPrice %></span></div>
+						<%   } %>
+						<div class="product_num">x
+							<%=item.nDisSkuNum %>
+						</div>
+					</div>
+					<div class="product_tip">
+						<%=item.nStateText %>
+					</div>
+				</li>
+
+				<%
+
+            }
+            %>
+
+			</ul>
+			<div class="empty_wrap"></div>
+		</div>
+		<div class="fix_wrap_btn js_exchange_confirm" data-has-gift="<%=hasGiftGood %>" data-act-id="<%=actId %>" data-distributor-id="<%=distributorId %>">
+			确定
+		</div>
+	</script>
+	<!--地址数据-->
+	<script src="//g.mdcdn.cn/js/module/districtData.js?t=20160119"></script>
+	<script type="text/javascript">
+		(function(global) {
+			var g = [
+					[]
+				],
+				d = '//g.mdcdn.cn',
+				m = {},
+				blankjs = "",
+				grays = {},
+				mdebug = location.href.indexOf("mdebug=1") != -1;
+			m.alias = {};
+			var a = {},
+				p = {},
+				c = [];
+			g["1"] = ["\/js\/version\/201702\/cart.commonv2.201702160820.js", "\/js\/version\/201608\/cookie.201608240122.js", "\/js\/version\/201511\/formatJson.201511251652.js", "\/js\/version\/201510\/mmd.address.201510231412.js", "\/js\/version\/201704\/mmd.cart.index_v2.201704240705.js", "\/js\/version\/201604\/module.error.201604051510.js", "\/js\/version\/201511\/url.201511251648.js", "\/js\/version\/201510\/zepto.mpopup.v2.201510281136.js"];
+			g["2"] = ["\/js\/version\/201511\/zepto.201511251648.js"];
+			c = [
+				['cart.commonv2', 1, 0],
+				['cookie', 1, 1],
+				['formatJson', 1, 2],
+				['mmd.address', 1, 3],
+				['mmd.cart.index_v2', 1, 4],
+				['module.error', 1, 5],
+				['url', 1, 6],
+				['zepto', 2, 0],
+				['zepto.mpopup.v2', 1, 7]
+			];
+			if(typeof(JSON) != "undefined" && window.localStorage) {
+				for(var key in localStorage) {
+					if(/^_m_/.test(key)) {
+						var store = JSON.parse(localStorage.getItem(key));
+						var i = key.substr(3);
+						if((new Date()).getTime() > store.cacheTime) {
+							continue;
+						}
+						var _m = getModuleMap(i);
+						if(!_m || _m.group == 0) {
+							continue;
+						}
+						var curPath = g[_m.group][_m.groupid];
+						if((d + curPath) == store.path) {
+							g[0].push(curPath);
+							g[_m.group][_m.groupid] = blankjs;
+							c[_m.index] = [_m.id, 0, g[0].length - 1];
+						}
+					}
+				}
+			}
+
+			function getModuleMap(id) {
+				for(var i = 0; i < c.length; i++) {
+					if(c[i][0] == id) {
+						return {
+							"id": id,
+							"index": i,
+							"group": c[i][1],
+							"groupid": c[i][2]
+						};
+					}
+				}
+				return "";
+			}
+
+			function getCombUrl(list) {
+				var a = [];
+				for(var i = 0; i < list.length; i++) {
+					if(list[i]) {
+						a.push(list[i]);
+					}
+				}
+				return a.length > 1 ? (d + "/??" + a.join(",")) : (d + a[0]);
+			}
+
+			for(var i = 0; i < c.length; i++) {
+				var surl = d + g[c[i][1]][c[i][2]];
+				var furl = getCombUrl(g[c[i][1]]); //合并包地址
+				a[c[i][0]] = surl;
+				p[c[i][0]] = (c[i][1] == 0) ? surl : furl;
+			}
+
+			m.alias = mdebug ? a : p;
+			m.moduleURI = a;
+
+			global._moduleConfig = m;
+
+			function gray(m) {}
+
+		})(this);
+	</script>
+	<script type="text/javascript">
+		if(typeof JSON !== "object") {
+			JSON = {};
+		}
+		(function() {
+			function f(n) {
+				return n < 10 ? "0" + n : n;
+			}
+			if(typeof Date.prototype.toJSON !== "function") {
+				Date.prototype.toJSON = function(key) {
+					return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null;
+				};
+				String.prototype.toJSON = Number.prototype.toJSON = Boolean.prototype.toJSON = function(key) {
+					return this.valueOf();
+				};
+			}
+			var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+				escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+				gap, indent, meta = {
+					"\b": "\\b",
+					"\t": "\\t",
+					"\n": "\\n",
+					"\f": "\\f",
+					"\r": "\\r",
+					'"': '\\"',
+					"\\": "\\\\"
+				},
+				rep;
+
+			function quote(string) {
+				escapable.lastIndex = 0;
+				return escapable.test(string) ? '"' + string.replace(escapable, function(a) {
+					var c = meta[a];
+					return typeof c === "string" ? c : "\\u" + ("0000" + a.charCodeAt(0).toString(16)).slice(-4);
+				}) + '"' : '"' + string + '"';
+			}
+
+			function str(key, holder) {
+				var i, k, v, length, mind = gap,
+					partial, value = holder[key];
+				if(value && typeof value === "object" && typeof value.toJSON === "function") {
+					value = value.toJSON(key);
+				}
+				if(typeof rep === "function") {
+					value = rep.call(holder, key, value);
+				}
+				switch(typeof value) {
+					case "string":
+						return quote(value);
+					case "number":
+						return isFinite(value) ? String(value) : "null";
+					case "boolean":
+					case "null":
+						return String(value);
+					case "object":
+						if(!value) {
+							return "null";
+						}
+						gap += indent;
+						partial = [];
+						if(Object.prototype.toString.apply(value) === "[object Array]") {
+							length = value.length;
+							for(i = 0; i < length; i += 1) {
+								partial[i] = str(i, value) || "null";
+							}
+							v = partial.length === 0 ? "[]" : gap ? "[\n" + gap + partial.join(",\n" + gap) + "\n" + mind + "]" : "[" + partial.join(",") + "]";
+							gap = mind;
+							return v;
+						}
+						if(rep && typeof rep === "object") {
+							length = rep.length;
+							for(i = 0; i < length; i += 1) {
+								if(typeof rep[i] === "string") {
+									k = rep[i];
+									v = str(k, value);
+									if(v) {
+										partial.push(quote(k) + (gap ? ": " : ":") + v);
+									}
+								}
+							}
+						} else {
+							for(k in value) {
+								if(Object.prototype.hasOwnProperty.call(value, k)) {
+									v = str(k, value);
+									if(v) {
+										partial.push(quote(k) + (gap ? ": " : ":") + v);
+									}
+								}
+							}
+						}
+						v = partial.length === 0 ? "{}" : gap ? "{\n" + gap + partial.join(",\n" + gap) + "\n" + mind + "}" : "{" + partial.join(",") + "}";
+						gap = mind;
+						return v;
+				}
+			}
+			if(typeof JSON.stringify !== "function") {
+				JSON.stringify = function(value, replacer, space) {
+					var i;
+					gap = "";
+					indent = "";
+					if(typeof space === "number") {
+						for(i = 0; i < space; i += 1) {
+							indent += " ";
+						}
+					} else {
+						if(typeof space === "string") {
+							indent = space;
+						}
+					}
+					rep = replacer;
+					if(replacer && typeof replacer !== "function" && (typeof replacer !== "object" || typeof replacer.length !== "number")) {
+						throw new Error("JSON.stringify");
+					}
+					return str("", {
+						"": value
+					});
+				};
+			}
+			if(typeof JSON.parse !== "function") {
+				JSON.parse = function(text, reviver) {
+					var j;
+
+					function walk(holder, key) {
+						var k, v, value = holder[key];
+						if(value && typeof value === "object") {
+							for(k in value) {
+								if(Object.prototype.hasOwnProperty.call(value, k)) {
+									v = walk(value, k);
+									if(v !== undefined) {
+										value[k] = v;
+									} else {
+										delete value[k];
+									}
+								}
+							}
+						}
+						return reviver.call(holder, key, value);
+					}
+					text = String(text);
+					cx.lastIndex = 0;
+					if(cx.test(text)) {
+						text = text.replace(cx, function(a) {
+							return "\\u" + ("0000" + a.charCodeAt(0).toString(16)).slice(-4);
+						});
+					}
+					if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, "@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:\s*\[)+/g, ""))) {
+						j = eval("(" + text + ")");
+						return typeof reviver === "function" ? walk({
+							"": j
+						}, "") : j;
+					}
+					throw new SyntaxError("JSON.parse");
+				};
+			}
+		}());
+		var modulejs, require, define;
+		(function(global) {
+			var mod, cfg, _modulejs, _define, _require;
+			var version = "1.0.2";
+			var isCache = true;
+			var cacheTime = 60 * 60 * 24 * 30 * 1000;
+			cfg = {
+				debug: location.href.indexOf("mdebug=1") != -1 ? true : false,
+				alias: {},
+				cssAlias: {},
+				moduleURI: {},
+				vars: {},
+				uris: {},
+				modules: {},
+				callback: [],
+				actModules: {},
+				cacheLoad: {},
+				cacheDel: {},
+				deps: {},
+				events: {},
+				timing: {}
+			};
+			_modulejs.config = config;
+			config(global["_moduleConfig"] ? global._moduleConfig : cfg);
+			global["_moduleConfig"] = cfg;
+			require = _require;
+			define = _define;
+			modulejs = _modulejs;
+			on("module_ready", function(id, fromeCache) {
+				cfg.callback = cleanArray(cfg.callback);
+				var init = cfg.callback,
+					l = init.length;
+				for(var i = 0; i < l; i++) {
+					if(init[i] && checkDeps(init[i].dependencies)) {
+						var cb = init[i].factory;
+						var deps = init[i].dependencies;
+						var mods = [];
+						var allDeps = [];
+						var m;
+						for(var j = 0; j < deps.length; j++) {
+							var m = _require(deps[j]);
+							allDeps.push(m.dependencies);
+							mods.push(m);
+						}
+						debug("callback_is_run=start", cb.toString(), cfg.callback);
+						init[i] = null;
+						cb.apply(null, mods);
+						cfg.debug && emit("callback_is_run", cb.toString().replace(/[\r\n]/g, ""));
+						if(window.moduleReady && moduleReady.length > 0) {
+							moduleReady.shift()();
+						}
+					}
+				}
+			});
+			on("module_require", function(id) {
+				cfg.actModules[id] = cfg.actModules[id] ? (cfg.actModules[id] + 1) : 1;
+			});
+			on("module_cacheDel", function(id) {
+				cfg.cacheDel[id] = 1;
+			});
+			on("cache_load", function(m) {});
+			on("module_loss_alias", function(id) {
+				console.error("module_loss_alias:" + id);
+			});
+			var cacheNow = new Date();
+			_loadCache();
+			cfg.timing['loadcache'] = new Date() - cacheNow;
+
+			function _loadCache() {
+				if(!_useCache()) {
+					return false;
+				}
+				localStorage.removeItem("_modules");
+				for(var key in localStorage) {
+					if(/^_m_/.test(key)) {
+						var store = JSON.parse(localStorage.getItem(key));
+						var i = key.substr(3);
+						var now = (new Date()).getTime();
+						var oneDay = 24 * 3600 * 1000;
+						if(cfg.alias[i]) {
+							if(_getModuleURI(i) != store.path || store.deps.join(",").indexOf("{") > -1) {
+								emit("module_cacheDel", i);
+								localStorage.removeItem(key);
+								continue;
+							}
+						} else {
+							if(now > store.cacheTime) {
+								emit("module_cacheDel", i);
+								localStorage.removeItem(key);
+								continue;
+							}
+						}
+						if(store.cacheTime - now < oneDay) {
+							store.cacheTime = (new Date()).getTime() + cacheTime;
+							try {
+								localStorage.removeItem(key);
+								localStorage.setItem(key, JSON.stringify(store));
+							} catch(e) {}
+						}
+						cfg.cacheLoad[store.id] = store;
+						emit("cache_load", store);
+					}
+				}
+			}
+
+			function _getModuleURI(id) {
+				return cfg.moduleURI[id] ? cfg.moduleURI[id] : cfg.alias[id];
+			}
+
+			function _useCache(id, deps, factory) {
+				if(typeof(JSON) == "undefined") {
+					return false;
+				}
+				if(!isCache) {
+					return false;
+				}
+				if(!(JSON && window.localStorage)) {
+					return false;
+				}
+				if(cfg.debug) {
+					return false;
+				}
+				var agent = navigator.userAgent.toLowerCase();
+				if(agent.indexOf("msie") > 0) {
+					var m = agent.match(/msie\s([\d\.]+);/i);
+					if(m && m.length >= 2 && parseInt(m[1]) <= 6) {
+						return false;
+					}
+				}
+				if(id && id.indexOf("_") == 0) {
+					return false;
+				}
+				if(factory && factory.toString().indexOf("_cacheThisModule_") < 0) {
+					return false;
+				}
+				return true;
+			}
+
+			function _cacheModule(id, deps, factory) {
+				var key = "_m_" + id;
+				var _t = localStorage.getItem(key);
+				var ms = _t ? JSON.parse(_t) : {};
+				ms = {
+					"id": id,
+					"deps": deps,
+					"factory": factory.toString(),
+					"path": _getModuleURI(id),
+					"cacheTime": (new Date()).getTime() + cacheTime
+				};
+				try {
+					localStorage.removeItem(key);
+					localStorage.setItem(key, JSON.stringify(ms));
+					emit("module_cached", id);
+				} catch(e) {}
+			}
+
+			function _define(id, deps, factory) {
+				if(arguments.length === 2) {
+					factory = deps;
+					deps = null;
+				}
+				deps = isType("Array", deps) ? deps : (deps ? [deps] : []);
+				if(isType("Function", factory)) {
+					var _deps = parseDependencies(factory.toString());
+				}
+				_useCache(id, deps, factory) && _cacheModule(id, deps, factory);
+				deps = mergeArray(deps, _deps);
+				var mod = new Module(id);
+				mod.dependencies = deps || [];
+				mod.factory = factory;
+				if(id == "_init") {
+					cfg.callback.push(mod);
+				} else {
+					cfg.modules[id] = mod;
+				}
+				emit("module_ready", id);
+			}
+
+			function _require(id) {
+				id = parseVars(id);
+				var module = cfg.modules[id];
+				emit("module_require", id);
+				if(!module) {
+					emit("module_error", id);
+					return null
+				}
+				if(module.exports) {
+					return module.exports;
+				}
+				var now = new Date();
+				var factory = module.factory;
+				var exports = isType("Function", factory) ? factory(require, module.exports = {}, module) : factory;
+				module.exports = exports === undefined ? module.exports : exports;
+				cfg.timing[id] = new Date() - now;
+				return module.exports;
+			}
+			_require.async = _modulejs;
+			_require.css = function(path) {
+				path = cfg.cssAlias && cfg.cssAlias[path] ? cfg.cssAlias[path] : path;
+				if(!path) {
+					return;
+				}
+				var l;
+				if(!window["_loadCss"] || window["_loadCss"].indexOf(path) < 0) {
+					l = document.createElement('link');
+					l.setAttribute('type', 'text/css');
+					l.setAttribute('rel', 'stylesheet');
+					l.setAttribute('href', path);
+					l.setAttribute("id", "loadCss" + Math.random());
+					document.getElementsByTagName("head")[0].appendChild(l);
+					window["_loadCss"] ? (window["_loadCss"] += "|" + path) : (window["_loadCss"] = "|" + path);
+				}
+				l && (typeof callback == "function") && (l.onload = callback);
+				return true;
+			}
+
+			function _modulejs(deps, factory) {
+				_define("_init", deps, factory);
+			}
+
+			function checkDeps(deps) {
+				var list = {},
+					flag = true;
+				for(var i = 0; i < deps.length; i++) list[deps[i]] = 1;
+				getDesps(deps, list);
+				for(var i in list) {
+					if(!cfg.modules[i]) {
+						loadModule(i);
+						flag = false;
+					}
+				}
+				return flag;
+
+				function getDesps(deps, list) {
+					for(var i = 0; i < deps.length; i++) {
+						if(!list[deps[i]]) {
+							list[deps[i]] = 1;
+						}
+						if(cfg.modules[deps[i]] && list[deps[i]] != 2) {
+							list[deps[i]] = 2;
+							getDesps(cfg.modules[deps[i]].dependencies, list);
+						}
+					}
+				}
+			}
+
+			function parseVars(id) {
+				var VARS_RE = /{([^{]+)}/g
+				var vars = cfg.vars
+				if(vars && id.indexOf("{") > -1) {
+					id = id.replace(VARS_RE, function(m, key) {
+						return isType("String", vars[key]) ? vars[key] : key
+					})
+				}
+				return id
+			}
+
+			function mergeObject(a, b) {
+				for(var i in b) {
+					if(!b.hasOwnProperty(i)) {
+						continue;
+					}
+					if(!a[i]) {
+						a[i] = b[i];
+					} else if(Object.prototype.toString.call(b[i]) == "[object Object]") {
+						mergeObject(a[i], b[i]);
+					} else {
+						a[i] = b[i];
+					}
+				}
+				return a;
+			}
+
+			function config(obj) {
+				return cfg = mergeObject(cfg, obj);
+			}
+
+			function Module(id) {
+				this.id = id;
+				this.dependencies = [];
+				this.exports = null;
+				this.uri = "";
+			}
+
+			function loadModule(id) {
+				var m;
+				if(m = cfg.cacheLoad[id]) {
+					return _define(m.id, m.deps, eval("a = " + m.factory));
+				}
+				if(cfg.modules[id]) {
+					emit("module_ready", id);
+					return;
+				}
+				var url = cfg.alias[id] ? cfg.alias[id] : "";
+				if(!url) {
+					emit("module_loss_alias", id);
+					return;
+				}
+				if(cfg.uris[url]) {
+					return;
+				}
+				cfg.uris[url] = 1;
+				var head = document.getElementsByTagName("head")[0] || document.documentElement;
+				var baseElement = head.getElementsByTagName("base")[0];
+				var node = document.createElement("script");
+				node.charset = "utf-8";
+				node.async = true;
+				node.src = url;
+				var handler = function() {
+					var callee = arguments.callee
+					cfg.timing[callee.uri] = new Date() - callee.time;
+				};
+				handler.time = new Date();
+				handler.uri = url;
+				node.onload = handler;
+				baseElement ? head.insertBefore(node, baseElement) : head.appendChild(node);
+				cfg.debug && emit("file_loading", url);
+			}
+
+			function on(name, cb) {
+				var cbs = cfg.events[name];
+				if(!cbs) {
+					cbs = cfg.events[name] = [];
+				}
+				cbs.push(cb);
+			}
+
+			function emit(name, evt) {
+				debug(name, evt);
+				if(!cfg.events[name] || cfg.events[name].length == 0) {
+					return;
+				}
+				for(var i = 0, l = cfg.events[name].length; i < l; i++) {
+					cfg.events[name][i](evt);
+				}
+				if(name === 'error') {
+					delete cfg.events[name];
+				}
+			}
+
+			function cleanArray(a) {
+				var n = [];
+				for(var i = 0; i < a.length; i++) {
+					a[i] && n.push(a[i]);
+				}
+				return n;
+			}
+
+			function mergeArray(a, b) {
+				for(var i = 0; i < b.length; i++) {
+					(("," + a + ",").indexOf("," + b[i] + ",") < 0) && a.push(b[i]);
+				}
+				return a;
+			}
+
+			function isType(type, obj) {
+				return Object.prototype.toString.call(obj) === "[object " + type + "]"
+			}
+
+			function parseDependencies(code) {
+				var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
+				var cjsRequireRegExp = /[^.]\s*require\s*\(\s*["']([^'"\s]+)["']\s*\)/g;
+				var ret = [];
+				code.replace(commentRegExp, "").replace(cjsRequireRegExp, function(match, dep) {
+					dep && ret.push(parseVars(dep));
+				})
+				return ret;
+			}
+
+			function debug() {
+				if(!cfg.debug) {
+					return true;
+				}
+				var a = [],
+					l = arguments.length;
+				for(var i = 0; i < l; i++) {
+					a.push(arguments[i]);
+				}
+				try {
+					console.log.apply(console, a);
+				} catch(e) {}
+			}
+		}(this));
+	</script>
+	<script type="text/javascript">
+		var _speedMarkModule = new Date();
+		modulejs('mmd.cart.index_v2', function(m) {
+			m.init();
+		});
+	</script>
+
+	<script>
+		(function() {
+			var _footConfig = {
+				pagePV: false
+			};
+			if(window.footConfig) {
+				for(var key in _footConfig) {
+					if(footConfig[key]) {
+						_footConfig[key] = footConfig[key];
+					}
+				}
+			}
+
+			function getCookie(name) {
+				var reg = new RegExp("(^| )" + name + "(?:=([^;]*))?(;|$)"),
+					val = document.cookie.match(reg);
+				return val ? (val[2] ? unescape(val[2]) : "") : null;
+			}
+
+			function setCookie(name, value, expires, path, domain, secure) {
+				var exp = new Date(),
+					expires = arguments[2] || null,
+					path = arguments[3] || "/",
+					domain = arguments[4] || null,
+					secure = arguments[5] || false;
+				expires ? exp.setMinutes(exp.getMinutes() + parseInt(expires)) : "";
+				document.cookie = name + '=' + encodeURIComponent(value) + (expires ? ';expires=' + exp.toGMTString() : '') + (path ? ';path=' + path : '') + (domain ? ';domain=' + domain : '') + (secure ? ';secure' : '');
+			}
+
+			function getUrlParam(name, url) {
+				//参数：变量名，url为空则表从当前页面的url中取
+				var u = arguments[1] || window.location.search,
+					reg = new RegExp("(^|&)" + name + "=([^#&]*)(&|#|$)"),
+					r = u.substr(u.indexOf("\?") + 1).match(reg);
+				return r != null ? r[2] : "";
+			}
+
+			function $loadUrl(o) {
+				o.element = o.element || 'script';
+				var el = document.createElement(o.element);
+				el.charset = o.charset || 'utf-8';
+				o.onBeforeSend && o.onBeforeSend(el); //发请求之前调用的函数
+				el.onload = el.onreadystatechange = function() {
+					if(/loaded|complete/i.test(this.readyState) || navigator.userAgent.toLowerCase().indexOf("msie") == -1) {
+						o.onload && o.onload(); //
+						clear();
+					}
+				};
+				el.onerror = function() {
+					clear();
+				};
+				el.src = o.url;
+				document.getElementsByTagName('head')[0].appendChild(el);
+
+				function clear() {
+					if(!el) {
+						return;
+					}
+					el.onload = el.onreadystatechange = el.onerror = null;
+					el.parentNode && (el.parentNode.removeChild(el));
+					el = null;
+				}
+			}
+
+			function updateEnv(data) {
+				for(var envKey in data) {
+					if(envKey == 'channel') {
+						window.WEB_CHANNEL = env[envKey];
+						// APP环境的固定场景值，不需要再改变
+						if(env[envKey] == 4 || env[envKey] == 5) {
+							continue;
+						}
+					}
+
+					if(data[envKey]) {
+						env[envKey] = data[envKey];
+					}
+				}
+				setCookie('env', '', -1, '', '.w.midea.com');
+				setCookie('env', JSON.stringify(env), 525600, '', domain);
+			}
+
+			function reportRd(opt) {
+				var pageMess = window.pageMess || {};
+				var oParams = {
+						curl: location.href,
+						rurl: document.referrer,
+						serviceid: 10,
+						mtag: '',
+						skuid: pageMess['skuid'] || getUrlParam('skuid') || '',
+						distributorid: pageMess['distributorid'] || getUrlParam('distributorid') || getUrlParam('disid') || '',
+						dealid: pageMess['dealid'] || getUrlParam('dealid') || '',
+						sellerid: pageMess['sellerid'] || getUrlParam('sellerid') || '',
+						supplierid: pageMess['supplierid'] || '',
+						fromuid: getUrlParam('__fromuid'),
+						from: getUrlParam('from')
+					},
+					arrParams = [];
+
+				if(location.href.indexOf('.midea.com/detail/index') > -1 && !oParams.skuid) {
+					oParams.skuid = getUrlParam('id');
+				}
+
+				for(var key in oParams) {
+					var v = opt[key];
+					if(v) {
+						oParams[key] = v;
+					}
+
+					arrParams.push(key + '=' + encodeURIComponent(oParams[key]));
+				}
+
+				$loadUrl({
+					url: '/common/log/rd?callback=rdcb&' + arrParams.join('&')
+				});
+			}
+
+			// 初始化env对象
+			var env = getCookie('env');
+			try {
+				if(!env) {
+					env = {};
+				} else {
+					env = JSON.parse(env);
+				}
+			} catch(e) {
+				env = {};
+			}
+
+			// 收集场景信息
+			var ua = navigator.userAgent.toLowerCase(),
+				channel, //  channel 1 微信，2 移动web，3 PC，4 美的商城APP，5 美家APP
+				regsrc = getUrlParam('regsrc') || '',
+				mh = getUrlParam('midea_home') == 1 ? 1 : 0;
+
+			if(mh == 1) {
+				// midea home
+				channel = 5;
+			} else if(ua.indexOf('micromessenger') > -1) {
+				//wechat
+				channel = 1;
+			} else if(ua.indexOf('mideamall') > -1 || window.WebViewJavascriptBridge || window.md || location.href.indexOf('appview') > -1) {
+				channel = 4;
+			} else if(/AppleWebKit.*Mobile/i.test(ua) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/i.test(ua))) {
+				// mobile
+				channel = 2;
+			}
+
+			document.addEventListener('WebViewJavascriptBridgeReady', function() {
+				channel = 4;
+				updateEnv({
+					channel: channel
+				});
+			}, false);
+
+			// mtag统计
+			var mtag = getUrlParam('mtag') || '',
+				allTags = getCookie('mtag') || '',
+				regMtag = /^[1-4]\d{4}\.\d+\.\d+$/,
+				arrTag = allTags.split(';'),
+				tmpTag,
+				newMtags = [],
+				isReplace = false,
+				mtagChannel,
+				domain = location.host.replace(/\w+(\.)/, '$1');
+			if(mtag && (regMtag.test(mtag))) {
+				mtagChannel = mtag.split('.')[0].split('')[0];
+				for(var i = 0; i < arrTag.length; i++) {
+					tmpTag = arrTag[i];
+					if(regMtag.test(tmpTag)) {
+						if(tmpTag.split('.')[0].split('')[0] == mtagChannel) {
+							newMtags.push(mtag);
+							isReplace = true;
+						} else {
+							newMtags.push(tmpTag);
+						}
+					}
+				}
+
+				if(newMtags.length === 0 || isReplace === false) {
+					newMtags.push(mtag);
+				}
+				reportRd({
+					mtag: mtag
+				});
+				setCookie('mtag', newMtags.join(';'), 10080, '', domain);
+			} else {
+				reportRd({
+					mtag: ''
+				});
+			}
+
+			updateEnv({
+				channel: channel,
+				regsrc: regsrc
+			});
+
+			// 设置MachineKey
+			var mk = getCookie('midea_mk');
+			if(!mk || mk.length != 31) {
+				$loadUrl({
+					url: '/next/machine_key/getmachinekey'
+				});
+				window.callback = function(obj) {
+					if(obj.errcode == 0) {
+						setCookie('midea_mk', obj.machinekey, 26280000, '/', domain);
+					}
+				}
+			}
+
+			if(channel != 4) {
+				// 统计代码
+				var oScript = document.createElement('SCRIPT');
+				oScript.src = 'https://hm.baidu.com/h.js?4b9a2b6647c9bdd3d01c28ea3f46049b';
+				oScript.charset = 'utf-8';
+				document.getElementsByTagName('head')[0].appendChild(oScript);
+			}
+
+			document.body.addEventListener("click", function(e) {
+				var evt = e || window.event,
+					src = evt.srcElement || evt.target,
+					mtag;
+
+				while(src && !mtag && src !== document.body) {
+					mtag = src.getAttribute ? src.getAttribute('data-mtag') : '';
+					src = src.parentNode;
+				}
+
+				if(mtag) {
+					reportRd({
+						mtag: mtag
+					});
+				}
+			});
+		})();
+	</script>
+
+	<!-- 360分析 由于影响app先去掉-->
+	<!--<script type="text/javascript" src="//s.union.360.cn/152109.js" async defer></script>-->
+
+</body>
+</html>
